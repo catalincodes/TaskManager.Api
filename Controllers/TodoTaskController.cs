@@ -37,7 +37,7 @@ public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBas
 	}
 
 	[HttpPut]
-	public ActionResult Update(int id, string? description, string? dueDate, string? priority)
+	public ActionResult Update(int id, string? description, string? dueDate, string? priority, string? status)
 	{
 		var task = repository.GetById(id);
 		if (task is null)
@@ -54,6 +54,9 @@ public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBas
 			    new DateTimeFormatInfo() { FullDateTimePattern = "yyyy-MM-dd" },
 			    out var dueDateParsed) && task.DueDate != dueDateParsed)
 			task.DueDate = dueDateParsed;
+		
+		if (status is not null && task.Status != status)
+			task.Status = status;
 
 		repository.Update(task);
 		
