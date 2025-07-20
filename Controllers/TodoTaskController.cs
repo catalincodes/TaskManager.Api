@@ -35,4 +35,28 @@ public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBas
 		
 		return Ok();
 	}
+
+	[HttpPut]
+	public ActionResult Update(int id, string? description, string? dueDate, string? priority)
+	{
+		var task = repository.GetById(id);
+		if (task is null)
+			return BadRequest();
+		
+		if (description is not null && task.Description != description)
+			task.Description = description;
+		
+		if (priority is not null && task.Priority != priority)
+			task.Priority = priority;
+		
+		if (dueDate is not null && !DateTime.TryParse(
+			    dueDate, 
+			    new DateTimeFormatInfo() { FullDateTimePattern = "yyyy-MM-dd" },
+			    out var dueDateParsed) && task.DueDate != dueDateParsed)
+			task.DueDate = dueDateParsed;
+
+		repository.Update(task);
+		
+		return Ok();
+	}
 }
