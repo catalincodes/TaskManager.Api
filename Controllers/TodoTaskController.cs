@@ -59,4 +59,15 @@ public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBas
 		
 		return Ok();
 	}
+
+	[HttpDelete]
+	public ActionResult Delete(int id)
+	{
+		var task = repository.GetById(id);
+		if (task is null)
+			return BadRequest();
+		
+		repository.Delete(id);
+		return Ok();
+	}
 }
