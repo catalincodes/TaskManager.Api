@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
+using TaskManager.Api.API.Models;
 using TaskManager.Api.Data;
 using TaskManager.Api.Models;
 
@@ -17,20 +18,20 @@ public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBas
 	}
 
 	[HttpPost]
-	public ActionResult Add(string description, string dueDate, string title, string priority)
+	public ActionResult Add([FromBody] TaskDTO task)
 	{
 		if (!DateTime.TryParse(
-			dueDate, 
+			task.DueDate, 
 			new DateTimeFormatInfo() { FullDateTimePattern = "yyyy-MM-dd" },
-			out var dueDateParsed) || string.IsNullOrWhiteSpace(title))
+			out var dueDateParsed) || string.IsNullOrWhiteSpace(task.Title))
 			return BadRequest();
 		
 		repository.Add((new TodoTask()
 		{
-			Description = description,
+			Description = task.Description,
 			DueDate = dueDateParsed,
-			Priority = priority,
-			Title = title
+			Priority = task.Priority,
+			Title = task.Title
 		}));
 		
 		return Ok();
