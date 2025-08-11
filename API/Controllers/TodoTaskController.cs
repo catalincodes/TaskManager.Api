@@ -66,7 +66,7 @@ public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBas
 	{
 		var task = repository.GetById(id);
 		if (task is null)
-			return BadRequest();
+			return NotFound();
 		
 		repository.Delete(id);
 		return Ok();
