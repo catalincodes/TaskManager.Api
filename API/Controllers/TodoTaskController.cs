@@ -37,34 +37,31 @@ public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBas
 		return Ok();
 	}
 
-	[HttpPut]
-	public ActionResult Update(int id, string? description, string? dueDate, string? priority, string? status)
+	[HttpPut("{id}")]
+	public ActionResult Update(int id, [FromBody] TaskDTO task)
 	{
-		var task = repository.GetById(id);
-		if (task is null)
+		var retrievedTask = repository.GetById(id);
+
+		if (retrievedTask is null)
+			return NoContent();
+		
+		if (!DateTime.TryParse(
+			    task.DueDate,
+			    new DateTimeFormatInfo() { FullDateTimePattern = "yyyy-MM-dd" },
+			    out var dueDateParsed))
 			return BadRequest();
 		
-		if (description is not null && task.Description != description)
-			task.Description = description;
-		
-		if (priority is not null && task.Priority != priority)
-			task.Priority = priority;
-		
-		if (dueDate is not null && !DateTime.TryParse(
-			    dueDate, 
-			    new DateTimeFormatInfo() { FullDateTimePattern = "yyyy-MM-dd" },
-			    out var dueDateParsed) && task.DueDate != dueDateParsed)
-			task.DueDate = dueDateParsed;
-		
-		if (status is not null && task.Status != status)
-			task.Status = status;
+		retrievedTask.Title = task.Title;
+		retrievedTask.Description = task.Description;
+		retrievedTask.DueDate = dueDateParsed;
+		retrievedTask.Priority = task.Priority;
 
-		repository.Update(task);
+		repository.Update(retrievedTask);
 		
-		return Ok();
+		return Ok(retrievedTask);
 	}
 
-	[HttpDelete]
+	[HttpDelete("{id}")]
 	public ActionResult Delete(int id)
 	{
 		var task = repository.GetById(id);
