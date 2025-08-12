@@ -4,14 +4,14 @@ using TaskManager.Api.API.Models;
 using TaskManager.Api.Data;
 using TaskManager.Api.Models;
 
-namespace TaskManager.Api.Controllers;
+namespace TaskManager.Api.API.Controllers;
 
 [ApiController]
 [Route("api/tasks")]
 public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBase
 {
 	[HttpGet]
-	public ActionResult<IEnumerable<TodoTask>> GetAll(string title = null, string dueDate = null, string priority = null)
+	public ActionResult<IEnumerable<TodoTask>> GetAll(string? title = null, string? dueDate = null, string? priority = null)
 	{
 		var tasks = repository.GetAll();
 		
