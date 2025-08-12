@@ -11,9 +11,21 @@ namespace TaskManager.Api.Controllers;
 public class TodoTaskControllers(ITodoTaskRepository repository) : ControllerBase
 {
 	[HttpGet]
-	public ActionResult<IEnumerable<TodoTask>> GetAll()
+	public ActionResult<IEnumerable<TodoTask>> GetAll(string title = null, string dueDate = null, string priority = null)
 	{
 		var tasks = repository.GetAll();
+		
+		if (title is not null)
+			tasks = tasks.Where(t => t.Title.Contains(title));
+
+		if (dueDate is not null && DateTime.TryParse(dueDate,
+				new DateTimeFormatInfo() { FullDateTimePattern = "yyyy-MM-dd" },
+				out var dueDateParsed))
+			tasks = tasks.Where(t => t.DueDate == dueDateParsed);
+
+		if (priority is not null)
+			tasks = tasks.Where(t => t.Priority == priority);
+		
 		return Ok(tasks);
 	}
 
