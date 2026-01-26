@@ -1,7 +1,21 @@
 using TaskManager.Api.Data;
 using TaskManager.Api.Models;
 
+const string corsPolicyName = "AllowAll";
+const string frontEndUrl = "http://localhost:5173";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy(name: corsPolicyName,
+		policy =>
+		{
+			policy.WithOrigins(frontEndUrl);
+			policy.AllowAnyMethod();
+			policy.AllowAnyHeader();
+		});
+});
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -41,6 +55,8 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
+app.UseCors(corsPolicyName);
 
 app.UseAuthorization();
 
