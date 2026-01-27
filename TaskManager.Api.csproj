@@ -13,6 +13,9 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="task-manager-ui\src\components\" />
+    <Folder Include="task-manager-ui\src\services\" />
+    <Folder Include="task-manager-ui\src\types\" />
   </ItemGroup>
 
 </Project>
