@@ -1,11 +1,43 @@
 import type {ToDoTask} from "../types/ToDoTask.ts"
+import type {TaskDTO} from "../types/TaskDTO.ts";
 
-// to be replaced with DTO
-const mockData: ToDoTask[] = []
+const mockData: TaskDTO[] = [
+    {
+        "id": 1,
+        "title": "Buy milk",
+        "description": "Buy milk from the supermarket",
+        "dueDate": "2026-02-15",
+        "status": "inProgress",
+        "priority": "low"
+    },
+    {
+        "id": 2,
+        "title": "Buy eggs",
+        "description": "Buy eggs from the supermarket",
+        "dueDate": "2026-02-31",
+        "status": "toDo",
+        "priority": "low"
+    }
+]
 
-// need a mapper method to convert DTO to ToDoTask
+export function mapTaskDTOsToToDoTasks(taskDTOs: TaskDTO[]): ToDoTask[] {
+    return taskDTOs.map(taskDTO => { 
+        return {
+            id: taskDTO.id,
+            title: taskDTO.title,
+            description: taskDTO.description,
+            dueDate: new Date(taskDTO.dueDate),
+            status: taskDTO.status,
+            priority: taskDTO.priority
+        }
+    });
+}
 
 export const getTasks = async ():Promise<ToDoTask[]> => {
-    //mock a call to the backend with a timeout, convert it using the mapper and return it.
-    return mockData;
+    //Simulate get data from backend
+    const dataFromApi: TaskDTO[] = await new Promise<TaskDTO[]>((resolve) =>
+        setTimeout(() => resolve(mockData), 1000));
+
+    //Return mapped ToDoTasks
+    return mapTaskDTOsToToDoTasks(dataFromApi);
 }
