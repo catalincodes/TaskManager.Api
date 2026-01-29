@@ -1,5 +1,6 @@
 namespace TaskManager.Api.API.Models;
 
+// ReSharper disable once InconsistentNaming
 public class TaskDTO
 {
     public string Description { get; set; } = string.Empty;
