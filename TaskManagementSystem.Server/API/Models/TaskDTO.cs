@@ -1,4 +1,4 @@
-namespace TaskManager.Api.API.Models;
+﻿namespace TaskManagementSystem.Server.API.Models;
 
 // ReSharper disable once InconsistentNaming
 public class TaskDTO
