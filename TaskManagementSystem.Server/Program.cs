@@ -1,10 +1,11 @@
 using TaskManagementSystem.Server.Data;
 using TaskManagementSystem.Server.Models;
 
-const string corsPolicyName = "AllowAll";
-const string frontEndUrl = "http://localhost:5118";
-
+var corsPolicyName = "AllowAll";
 var builder = WebApplication.CreateBuilder(args);
+
+var frontEndUrl = builder.Configuration["AllowedOrigins"]
+    ?? throw new InvalidOperationException("Configuration 'AllowedOrigins' is missing. Check User Secrets or Environment Variables.");
 
 builder.Services.AddCors(options =>
 {
@@ -51,10 +52,8 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseHttpsRedirection();
 }
-
-
-app.UseHttpsRedirection();
 
 app.UseCors(corsPolicyName);
 
