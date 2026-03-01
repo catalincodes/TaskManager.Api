@@ -1,7 +1,3 @@
 <Solution>
-  <Project Path="taskmanagementsystem.client/taskmanagementsystem.client.esproj">
-    <Build />
-    <Deploy Solution="Release|*" />
-  </Project>
   <Project Path="TaskManagementSystem.Server/TaskManagementSystem.Server.csproj" />
 </Solution>
