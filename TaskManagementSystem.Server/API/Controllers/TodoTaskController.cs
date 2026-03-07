@@ -43,7 +43,8 @@ public class TodoTaskControllers(IToDoTaskRepository repository) : ControllerBas
             Description = task.Description,
             DueDate = dueDateParsed,
             Priority = task.Priority,
-            Title = task.Title
+            Title = task.Title,
+            Status = task.Status
         }));
 
         return Ok();
@@ -67,6 +68,7 @@ public class TodoTaskControllers(IToDoTaskRepository repository) : ControllerBas
         retrievedTask.Description = task.Description;
         retrievedTask.DueDate = dueDateParsed;
         retrievedTask.Priority = task.Priority;
+        retrievedTask.Status = task.Status;
 
         repository.Update(retrievedTask);
 
