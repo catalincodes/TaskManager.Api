@@ -36,8 +36,6 @@ function App() {
     return <p>Error: {error}</p>;
   }
 
-  // const listTasks = tasks.map(task => <TaskItem key={task.id} title={task.title} />);
-
   return (
     <div className="min-h-dvh bg-slate-50 flex justify-center py-0 md:py-10">
       <div
