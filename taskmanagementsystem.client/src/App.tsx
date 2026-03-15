@@ -43,7 +43,6 @@ function App() {
         className="relative w-full max-w-md bg-white shadow-xl md:rounded-3xl overflow-hidden
                             flex flex-col border border-slate-200"
       >
-
         <TaskHeader />
         <TaskList tasks={tasks} />
 
