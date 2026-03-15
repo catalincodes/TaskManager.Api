@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getTasks } from './services/taskService';
 import type { ToDoTask } from './types/ToDoTask.ts';
-import { TaskItem } from './components/TaskItem.tsx';
+import { TaskList } from './components/TaskList.tsx';
 
 function App() {
   const [tasks, setTasks] = useState<ToDoTask[]>([]);
@@ -36,7 +36,7 @@ function App() {
     return <p>Error: {error}</p>;
   }
 
-  const listTasks = tasks.map(task => <TaskItem key={task.id} title={task.title} />);
+  // const listTasks = tasks.map(task => <TaskItem key={task.id} title={task.title} />);
 
   return (
     <div className="min-h-dvh bg-slate-50 flex justify-center py-0 md:py-10">
@@ -48,9 +48,7 @@ function App() {
           <h1 className="text-2xl font-bold tracking-tight">Task Manager</h1>
         </header>
 
-        <main className="flex-1 overflow-y-auto bg-white">
-          <ul className="divide-y divide-slate-50">{listTasks}</ul>
-        </main>
+        <TaskList tasks={tasks} />
 
         <button
           aria-aria-label="Add Task"
