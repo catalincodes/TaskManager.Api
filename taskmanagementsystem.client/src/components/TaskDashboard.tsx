@@ -47,7 +47,7 @@ export function TaskDashboard() {
         <TaskList tasks={tasks} />
 
         <button
-          aria-aria-label="Add Task"
+          aria-label="Add Task"
           className="absolute bottom-8 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center text-3xl font-light hover:bg-blue-700 transition-transform active:scale-90 z-10"
         >
           +
