@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getTasks } from "./services/taskService";
 import type { ToDoTask } from "./types/ToDoTask.ts";
+import { TaskItem } from "./components/TaskItem.tsx";
 
 function App() {
     const [tasks, setTasks] = useState<ToDoTask[]>([]);
@@ -34,12 +35,9 @@ function App() {
     if (error)
         return <p>Error: {error}</p>;
 
-    const listTasks = tasks.map(task => (
-        <li key={task.id} className="p-4 bg-white border-b border-slate-100 last:border-0 flex items-center hover:bg-slate-50 transition-colors">
-            <div className="w-5 h-5 rounded-full border-2 border-blue-500 mr-4 flex-shrink-0" />
-            <span className="text-slate-700 font-medium">{task.title}</span>
-        </li>
-    ));
+      const listTasks = tasks.map(task => (
+        <TaskItem key={ task.id } title={ task.title } />
+      ));
 
     return (
         <div className="min-h-dvh bg-slate-50 flex justify-center py-0 md:py-10">
