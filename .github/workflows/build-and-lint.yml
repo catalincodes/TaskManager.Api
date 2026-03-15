@@ -1,0 +1,41 @@
+name: PR Quality Gate
+
+on:
+  pull_request:
+    branches: [ develop, main ]
+
+jobs:
+  # --- Frontend Quality Checks ---
+  frontend-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./taskmanagementsystem.client
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: './taskmanagementsystem.client/package-lock.json'
+      - name: Install Dependencies
+        run: npm ci
+      - name: Prettier Check
+        run: npm run format:check
+      - name: ESLint Check
+        run: npm run lint
+
+  # --- Backend Quality Checks ---
+  backend-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x' # Adjust to your version (6.0, 7.0, 8.0)
+      - name: Restore Dependencies
+        run: dotnet restore
+      - name: Build API
+        run: dotnet build --no-restore --configuration Release
