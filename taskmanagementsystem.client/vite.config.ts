@@ -8,7 +8,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         // This pulls DIRECTLY from what is exported in the process of dev.sh
-        target: process.env.VITE_API_TARGET || 'http://localhost:5113',
+        target: process.env.VITE_API_TARGET ?? 'http://localhost:5113',
         changeOrigin: true,
         secure: false
       }
