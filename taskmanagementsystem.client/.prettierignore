@@ -1,0 +1,16 @@
+# Dependencies and builds
+node_modules
+dist
+build
+
+# Config files you want to leave alone
+package-lock.json
+eslint.config.js
+postcss.config.js
+vite.config.ts
+tsconfig.json
+CHANGELOG.md
+README.md
+
+# System files
+.DS_Store

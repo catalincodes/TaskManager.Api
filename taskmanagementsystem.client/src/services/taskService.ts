@@ -9,19 +9,20 @@ export function mapTaskDTOsToToDoTasks(taskDTOs: TaskDTO[]): ToDoTask[] {
       description: taskDTO.description,
       dueDate: new Date(taskDTO.dueDate),
       status: taskDTO.status,
-      priority: taskDTO.priority
+      priority: taskDTO.priority,
     };
   });
 }
 
-export const getTasks = async ():Promise<ToDoTask[]> => {
+export const getTasks = async (): Promise<ToDoTask[]> => {
   const response = await fetch('/api/tasks');
-    
-  if (!response.ok)
+
+  if (!response.ok) {
     throw new Error('Error fetching tasks');
-    
-  const dataFromApi: TaskDTO[] = await response.json() as unknown as TaskDTO[];
-    
+  }
+
+  const dataFromApi: TaskDTO[] = (await response.json()) as unknown as TaskDTO[];
+
   //Return mapped ToDoTasks
   return mapTaskDTOsToToDoTasks(dataFromApi);
 };

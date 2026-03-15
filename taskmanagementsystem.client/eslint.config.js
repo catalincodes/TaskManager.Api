@@ -37,11 +37,15 @@ export default tseslint.config(
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-      // Your Horace Styles
+      // Style rules: 
       '@stylistic/indent': ['error', 2],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/semi': ['error', 'always'],
       '@stylistic/object-curly-spacing': ['error', 'always'],
+      '@stylistic/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      '@stylistic/jsx-curly-spacing': ['error', { 'when': 'never', 'children': true }],
+      '@stylistic/jsx-closing-bracket-location': ['error', 'line-aligned'],
+      'curly': ['error', 'all'],
     },
   }
 );
