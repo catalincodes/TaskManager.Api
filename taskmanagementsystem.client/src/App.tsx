@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { getTasks } from './services/taskService';
 import type { ToDoTask } from './types/ToDoTask.ts';
 import { TaskList } from './components/TaskList.tsx';
+import { TaskHeader } from './components/TaskHeader.tsx';
 
 function App() {
   const [tasks, setTasks] = useState<ToDoTask[]>([]);
@@ -42,10 +43,8 @@ function App() {
         className="relative w-full max-w-md bg-white shadow-xl md:rounded-3xl overflow-hidden
                             flex flex-col border border-slate-200"
       >
-        <header className="px-6 py-8 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-          <h1 className="text-2xl font-bold tracking-tight">Task Manager</h1>
-        </header>
 
+        <TaskHeader />
         <TaskList tasks={tasks} />
 
         <button
