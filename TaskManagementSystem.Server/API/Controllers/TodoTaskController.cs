@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using System.Text.Json;
 using TaskManagementSystem.Server.API.Models;
 using TaskManagementSystem.Server.Data;
 using TaskManagementSystem.Server.Models;
@@ -56,7 +57,7 @@ public class TodoTaskControllers(IToDoTaskRepository repository) : ControllerBas
         var retrievedTask = repository.GetById(id);
 
         if (retrievedTask is null)
-            return NoContent();
+            return NotFound();
 
         if (!DateTime.TryParse(
                 task.DueDate,
@@ -69,6 +70,39 @@ public class TodoTaskControllers(IToDoTaskRepository repository) : ControllerBas
         retrievedTask.DueDate = dueDateParsed;
         retrievedTask.Priority = task.Priority;
         retrievedTask.Status = task.Status;
+
+        repository.Update(retrievedTask);
+
+        return Ok(retrievedTask);
+    }
+
+    [HttpPatch("{id}")]
+    public ActionResult PartialUpdate(int id, [FromBody] JsonElement jsonElement)
+    {
+        var retrievedTask = repository.GetById(id);
+
+        if (retrievedTask is null)
+            return NotFound();
+
+        // Title
+        if (jsonElement.TryGetProperty("Title", out var titleProp))
+            retrievedTask.Title = titleProp.GetString() ?? string.Empty;
+
+        // Description
+        if (jsonElement.TryGetProperty("Description", out var descriptionProp))
+            retrievedTask.Description = descriptionProp.GetString() ?? string.Empty;
+
+        // DueDate
+        if (jsonElement.TryGetProperty("DueDate", out var dueDateProp))
+            retrievedTask.DueDate = dueDateProp.GetDateTime();
+
+        // Priority
+        if (jsonElement.TryGetProperty("Priority", out var priorityProp))
+            retrievedTask.Priority = priorityProp.GetString() ?? string.Empty;
+
+        // Status
+        if (jsonElement.TryGetProperty("Status", out var statusProp))
+            retrievedTask.Status = statusProp.GetString() ?? string.Empty;
 
         repository.Update(retrievedTask);
 
