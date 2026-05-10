@@ -1,5 +1,7 @@
 import type { ToDoTask } from '../types/ToDoTask.ts';
 import type { TaskDTO } from '../types/TaskDTO.ts';
+import api from '../api.ts';
+import axios from 'axios';
 
 export function mapTaskDTOsToToDoTasks(taskDTOs: TaskDTO[]): ToDoTask[] {
   return taskDTOs.map(taskDTO => {
@@ -15,14 +17,19 @@ export function mapTaskDTOsToToDoTasks(taskDTOs: TaskDTO[]): ToDoTask[] {
 }
 
 export const getTasks = async (): Promise<ToDoTask[]> => {
-  const response = await fetch('/api/tasks');
+  try {
+    const response = await api.get<TaskDTO[]>('/api/tasks');
 
-  if (!response.ok) {
-    throw new Error('Error fetching tasks');
+    const dataFromApi = response.data;
+
+    return mapTaskDTOsToToDoTasks(dataFromApi);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(`API Error : ${error.response?.status} - ${error.message}`);
+    } else {
+      console.error('Unknown error');
+    }
+
+    return [];
   }
-
-  const dataFromApi: TaskDTO[] = (await response.json()) as unknown as TaskDTO[];
-
-  //Return mapped ToDoTasks
-  return mapTaskDTOsToToDoTasks(dataFromApi);
 };
