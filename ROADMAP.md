@@ -6,7 +6,7 @@ Goal: Develop a robust CRUD engine in .NET.
 - [x] Implement body-based requests for POST/PUT
 - [x] Standardize HTTP Status Codes (204 for missing objects)
 - [x] Implement server-side filtering (Title, Date, Priority)
-- [ ] Data Integrity—Implement [Required] and [StringLength] validation in Models.
+- [ ] Data Integrity—Implement [Required] and [StringLength] validation in Models. (after edit screen in Phase 3)
 
 Phase 2: Basic UI & Tooling (The Handshake)
 Goal: Establish the environment and the communication layer.
@@ -21,10 +21,13 @@ Phase 3: CRUD & Componentization (Current Focus)
 Goal: Move from a "Flat Prototye" to a "Modular System."
 
 - [x] Status Persistence: Back-end DTOs and Logic now support task status.
-- [ ] Refactor: Break App.tsx into modular components (TaskDashboard, TaskList, TaskItem).
-- [ ] Feature: Specialized API endpoint for Task Completion.
-- [ ] Interactions: Implement Toggle (Complete), Add New, and Edit (Pencil icon).
+- [x] Refactor: Break App.tsx into modular components (TaskDashboard, TaskList, TaskItem).
+- [x] Feature: Reusable API endpoint for PATCH operations.
+- [ ] Interactions: Implement Toggle (Complete).
+- [ ] Feature: Add an edit screen.
+- [ ] Interactions: Add New, Edit (Pencil icon).
 - [ ] Soft Delete: Replace hard deletion with isDeleted visibility logic.🗺️ Project Roadmap: Task Management System
+- [ ] Polishing: Replace strings in the domain model with specialized data types for DueDate, Priority and Status 
 
 Future Vision
 - MySQL database persistence 
@@ -36,6 +39,8 @@ Future Vision
 - Daily CRON event
 - Focus mode
 - Search & Filtering
+- ✨ AI Day-at-a-glance
+- ✨ AI Planning
 
 Important notes
 - an item has ID, ParentID, TLParentId among other stuff
